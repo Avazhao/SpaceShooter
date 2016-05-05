@@ -23,12 +23,16 @@ public class Trouble : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		if (col.gameObject.tag == "Baundry") {
+		if (col.gameObject.tag == "Baundry"||col.gameObject.tag =="Enemy") {
 			return;
 		}
 
 
-		Instantiate (BoltExplore, transform.position, transform.rotation);
+        if (BoltExplore != null)
+        {
+            Instantiate(BoltExplore, transform.position, transform.rotation);
+        }
+        
 
 		Destroy (this.gameObject);
 		Destroy (col.gameObject,0.01f);

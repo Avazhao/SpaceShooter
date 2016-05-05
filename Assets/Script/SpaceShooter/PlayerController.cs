@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
@@ -49,7 +48,8 @@ public class PlayerController : MonoBehaviour {
 			lastBoltTime = Time.time;
 			GameObject go = Instantiate(bolt,BoltGrid.position,BoltGrid.rotation) as GameObject; 
 			go.transform.SetParent(BoltGrid);
-		}
+            GetComponent<AudioSource>().Play();
+        }
 	}
 
 	void FixedUpdate(){

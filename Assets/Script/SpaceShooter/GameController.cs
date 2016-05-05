@@ -4,7 +4,7 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 
-	public GameObject tro;
+	public GameObject[] tro;
 	public int count;
 	public Vector3 pos;
 	public GameObject troGrid;
@@ -25,13 +25,17 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		win_gameOver.pressRDelegateHandle = GameStart;
-		GameStart ();
-	}
+        Reset();
+        GameState(true);
+        StartCoroutine(RandomTrouble());
+
+    }
 
 	void Update(){
 		if (!gaming&&Input.GetKeyDown(KeyCode.R)) {
 			GameStart();
-		}
+            
+        }
 	}
 
 	/// <summary>
@@ -42,7 +46,7 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds (waitTime);
 		while(true) {
 			for(int i=0;i<count&&gaming;i++){
-		    	GameObject go = Instantiate(tro,new Vector3(Random.Range(-pos.x,pos.x),pos.y,pos.z),Quaternion.identity) as GameObject;
+		    	GameObject go = Instantiate(tro[Random.Range(0,tro.Length)],new Vector3(Random.Range(-pos.x,pos.x),pos.y,pos.z),Quaternion.identity) as GameObject;
 			//Debug.Log(go.GetInstanceID());
 		    	Trouble to = go.GetComponent<Trouble>();
 		    	to.AddScoreDelegateHandle = AddScoreDelegateHandle;
@@ -66,8 +70,12 @@ public class GameController : MonoBehaviour {
 	private void Reset(){
 		score = 0;
 		updateScore ();
+        win_gameOver.show(false);
 
-	}
+        win_gaming.show(true);
+        win_gaming.updateScore(score);
+
+    }
 
 	/// <summary>
 	/// 游戏状态
@@ -88,31 +96,27 @@ public class GameController : MonoBehaviour {
 
 	IEnumerator PlayIdleAnimations(){
 		yield return new WaitForSeconds (1);
-		clearTro ();
+       
+        clearTro ();
 		GameState (false);
 		win_gaming.show (false);
 		win_gameOver.show (true);
 		win_gameOver.setScore (score);
 		Debug.Log (score);
-		Time.timeScale = 0;
+		//Time.timeScale = 0;
 	}
 
 	/// <summary>
 	/// 游戏开始
 	/// </summary>
 	private void GameStart(){
-		Time.timeScale = 1;
-		Reset ();
-
-		win_gameOver.show (false);
-
-		win_gaming.show (true);
-		win_gaming.updateScore (score);
-
-		GameState (true);
+		//Time.timeScale = 1;                
+        Application.LoadLevel("SpaceShooter");
+        Reset();
+        GameState (true);
 		StartCoroutine (RandomTrouble ());
-		Instantiate (player);
-	}
+		//Instantiate (player);
+    }
 
 	/// <summary>
 	/// 清除剩余的障碍物
