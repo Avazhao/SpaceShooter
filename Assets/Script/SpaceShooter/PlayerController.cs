@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour {
 
 
 
+
 	// Use this for initialization
 	void Start () {
 	
@@ -61,9 +62,13 @@ public class PlayerController : MonoBehaviour {
 		rig.velocity = vel * speed;
 		//倾斜飞船
 		rig.rotation = Quaternion.Euler (0, 0, vel.x * tlit);
-		//限制飞船移动的位置
-		rig.position = new Vector3 (Mathf.Clamp (rig.position.x, bau.XMin, bau.XMax), 0, Mathf.Clamp (rig.position.z, bau.YMin, bau.YMax));
-	}
+        //限制飞船移动的位置
+#if ThirdD
+        rig.position = new Vector3 (Mathf.Clamp (rig.position.x, bau.XMin, bau.XMax), 0, Mathf.Clamp (rig.position.z, bau.ZMin, bau.Zmax));
+# else 
+        rig.position = new Vector3(Mathf.Clamp(rig.position.x, bau.XMin, bau.XMax), Mathf.Clamp(rig.position.y, bau.YMin, bau.YMax), 0);
+#endif
+    }
 }
 
 /// <summary>
@@ -72,5 +77,5 @@ public class PlayerController : MonoBehaviour {
 [System.Serializable]
 public class Baundry
 {
-	public float XMin,XMax,YMin,YMax;
+	public float XMin,XMax,YMin,YMax,ZMin,Zmax;
 }
