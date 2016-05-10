@@ -10,7 +10,7 @@ public class Mover : MonoBehaviour {
 	private Rigidbody rig;
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		rig = GetComponent<Rigidbody> ();
 		rig.velocity = transform.forward * speed;
 	}
