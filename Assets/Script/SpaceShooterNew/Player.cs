@@ -15,6 +15,8 @@ public class Player : GameActor {
     private float lastShootTime = 0;
     private Vector3 pos = Vector3.zero;
 
+    public AudioSource bolt_audio;
+
     public delegate void updateScoreDelegate(int score);
     public updateScoreDelegate updateScoreDelegateHandle;
 
@@ -53,7 +55,9 @@ public class Player : GameActor {
     public override void Contact(GameActor col)
     {
         if (!isSameFource(col))
-        {
+        {            
+            this.playExplore();
+            col.playExplore();
             Destroy(col.gameObject);
             Destroy(this.gameObject);
             gameOver();
@@ -84,8 +88,8 @@ public class Player : GameActor {
         GameObject go = Instantiate(bolt, boltGrid.transform.position, boltGrid.transform.rotation) as GameObject;
         go.transform.SetParent(boltGrid.transform);
         Boltss actor = go.GetComponent<Boltss>();
-
         actor.updateScoreDelegateHandle = updateScore;
         
     }
+
 }

@@ -6,7 +6,7 @@ public class Enemy : GameActor
     public Rigidbody rigid;
 
     public GameObject bolt;
-    public GameObject boltGrid;
+    public GameObject spawnPoint;
     
     public float waitTime;
     public float waitShoot;
@@ -18,6 +18,7 @@ public class Enemy : GameActor
 
     public float tilt;
     public int maxCount;
+    
 
     private Vector3 nextPos = Vector3.zero;
     private float z_currSpeed;
@@ -70,7 +71,7 @@ public class Enemy : GameActor
     {        
         for(int i = 0; i < count; i++)
         {
-            GameObject go = Instantiate(bolt, boltGrid.transform.position, boltGrid.transform.rotation) as GameObject;
+            GameObject go = Instantiate(bolt, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
             GameActor actor = go.GetComponent<GameActor>();
             if (actor != null)
             {
@@ -80,4 +81,5 @@ public class Enemy : GameActor
         }
         
     }
+
 }

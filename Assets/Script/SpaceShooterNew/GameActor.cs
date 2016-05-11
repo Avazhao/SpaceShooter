@@ -8,6 +8,8 @@ public class GameActor : MonoBehaviour {
 
     public Vector2 X_limit;
     public Vector2 Z_limit;
+    
+    public GameObject explore;
 
     public delegate void GameOverDelegate();
     public GameOverDelegate GameOverDelegateHandle;
@@ -36,5 +38,14 @@ public class GameActor : MonoBehaviour {
     public bool isSameFource(GameActor actor)
     {
         return this.fight == actor.fight;
+    }
+
+    public void playExplore()
+    {
+        if (explore != null)
+        {
+            Instantiate(explore, transform.position, Quaternion.identity);
+        }
+        
     }
 }

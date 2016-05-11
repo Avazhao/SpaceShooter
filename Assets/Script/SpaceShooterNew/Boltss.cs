@@ -8,11 +8,11 @@ public class Boltss : GameActor
 
     public override void Contact(GameActor col)
     {
-        if (this.fight == 1 || isSameFource(col)||col.gameObject.tag =="Bolt")
+        if (this.fight == 1 || isSameFource(col))
             return;
 
         updateScore(col.score);
-
+        col.playExplore();
         Destroy(this.gameObject);
         Destroy(col.gameObject);
     }
